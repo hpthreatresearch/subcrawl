@@ -1,0 +1,48 @@
+<!-- © Copyright 2021 HP Development Company, L.P. -->
+{% extends 'base.html' %}
+
+{% block content %}
+          <div class="row">
+            <h2 class="ui huge dividing header" style="margin-top:10px">Dashboard</h2>
+          </div>
+          <div class="center aligned row" >
+		  <div style="display: table; width: 48%; height: 200px; border: 1px solid black; margin-right:20px; border-radius: 25px; margin-top: 20px;">
+			  <div style="display: table-cell; vertical-align: middle; text-align:center">
+				<div>
+				  <label style="font-size:28px">Scanned Domains<br><br>{{ domains }}</label>
+				</div>
+			  </div>
+		  </div>
+		  <div style="display: table; width: 48%; height: 200px; border-radius: 25px; border: 1px solid black; margin-top: 20px;">
+			<div style="display: table-cell; vertical-align: middle; text-align:center">
+				<div>
+				  <label style="font-size:28px">Scanned URLs<br><br>{{ urls }}</label>
+				</div>
+			  </div>
+		  </div>
+		  
+		  <div style="display: table; width: 48%; height: 200px; border-radius: 25px; border: 1px solid black; margin-right:20px; margin-top: 20px;">
+			<div style="display: table-cell; vertical-align: middle; text-align:center">
+				<div>
+				  <label style="font-size:28px">Top Tags<br><br></label>
+				  {% for tag in tags %}
+					<a href="/search?search=tag:{{ tag | display_tagname}}" class="button ui mini {{ tag.color }}">{{ tag | display_tagname}} ({{ tag.count }})</a>
+				  {%- endfor %}
+				</div>
+			  </div>
+		  </div>
+		  
+		  <div style="display: table; width: 48%; height: 200px; border-radius: 25px; border: 1px solid black; margin-top: 20px;">
+			<div style="display: table-cell; vertical-align: middle; text-align:center">
+				<div>
+				  <label style="font-size:28px">Top Hashes<br><br></label><p style="font-family: monospace;">
+				  {% for hash in hashes %}
+					<a href="/search?search=sha256:{{ hash.sha256 }}">{{ hash.sha256 }} ({{ hash.count }})</a><br>
+				  {%- endfor %}
+				</p></div>
+			  </div>
+		  </div>
+			
+          </div>
+
+{% endblock %}

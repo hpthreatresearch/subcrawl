@@ -1,0 +1,79 @@
+crawler:
+  batch_size: 50
+  log_level: INFO
+  scan_simple_domains: False
+  host_max_crawl_depth: 2
+  download_dir: samples/
+  tmp_dir: tmp/
+  save_payload_content: False
+  yara_rules: yara-rules/combined-rules.yar
+  logos_path: utils/logos/
+  tag_line: ~~ Harvesting the Open Web ~~
+  http_request_timeout: 10
+  delay_execution_time: 10
+  http_download_timeout: 60
+  http_max_size: 26214400
+  processing_modules:
+    - ClamAVProcessing
+    - JARMProcessing
+    - TLSHProcessing
+    - YARAProcessing
+  storage_modules:
+    - SqliteStorage
+  ext_exclude:
+    - .js
+    - .css
+    - .eot
+    - .woff
+    - .woff2
+    - .png
+    - .jpg
+    - .jpeg
+    - .gif
+    - .json
+    - .scss
+    - .md
+    - tinymce.php
+    - .mp4
+    - .mp3
+    - .mo
+    - .svg
+    - .po
+    - .crt
+    - .phar
+    - .txt
+    - .map
+    - .xml
+    - .pdf
+    - .ico
+    - .ttf
+    - .go
+    - .psd
+    - .csv
+    - .xap
+    - .ts
+  archive_magics:
+    - zip archive data
+  pe_magics:
+    - pe32
+    - ms-dos
+  php_magics:
+    - php script
+  office_magics:
+    - "application: microsoft"
+    - microsoft ooxml
+    - microsoft excel
+    - microsoft word
+  elf_magics:
+    - "ELF 64"
+    - "ELF 32"
+  headers:
+    User-Agent: Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36
+    DNT: "1"
+    Pragma: no-cache
+    Cache-Control: no-cache
+  urlhaus_api: https://urlhaus.abuse.ch/downloads/csv_recent/
+misp:
+  misp_url: https://localhost
+  misp_api_key: API_KEY_GOES_HERE
+  domain_event: 0

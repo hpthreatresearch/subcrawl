@@ -1,0 +1,34 @@
+<!-- © Copyright 2021 HP Development Company, L.P. -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+          <div class="row">
+            <h2 class="ui huge dividing header" style="margin-top:10px">Domains</h2>
+          </div>
+          <div class="row">
+            <table class="ui single line striped selectable searchable unstackable table sortable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Urls</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for domain in domains %}
+                  <tr class='clickable clickable-row' data-href='/domain/{{- domain.id }}'>
+                    <td>{{- domain.id }}</td>
+                    <td>{{- domain.name }}</td>
+                    <td>{{- domain.description }}</td>
+                    <td>{{- domain.urls.count() }}</td>
+                  </tr>
+                {%- endfor %}
+
+              </tbody>
+            </table>
+
+          </div>
+{% endblock %}

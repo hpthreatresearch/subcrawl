@@ -1,0 +1,94 @@
+<!-- © Copyright 2021 HP Development Company, L.P. -->
+{% extends 'base.html' %}
+
+{% block content %}
+          <div class="row">
+            <h2 class="ui huge dividing header" style="margin-top:10px">Domain Information</h2>
+          </div>
+          <div class="center aligned row">
+
+            <form class="ui form" style="width:100%" method="POST" action="/domain/{{ domain.id }}">
+
+              <div class="field">
+                <label style="font-size:16px">Name</label>
+				<input type="text" disabled style="font-size:16px; opacity:0.8;" name="domain" placeholder="Domain" value="{{ domain.name }}">
+              </div>
+
+              <div class="field">
+                <label style="font-size:16px">Description</label>
+                <textarea rows=2 name="description">{{ domain.description }}</textarea>
+              </div>
+			  
+			  <div class="field">
+                <label style="font-size:16px">Tags</label>
+				{% for tag in tags %}
+					<a href="/search?search=tag:{{ tag.tag }}" class="ui mini {{ tag.color }} label">{{ tag.tag }}</a>
+				{%- endfor %}
+              </div><br>
+
+
+              <input type="submit" value="Update Domain" class="ui button" />
+              <input type="button" value="Delete Domain" name="confirm" class="ui button red" id="action-delete" />
+
+            </form>
+
+            <div class="ui mini modal">
+              <div class="header">Confirm Deletion</div>
+              <div class="content">
+                <p>Do you really want to delete this Domain with all its Urls?</p>
+              </div>
+              <div class="actions">
+                <form method="POST" action="/domain/{{ domain.id }}">
+                  <div class="ui deny button">
+                    Cancel
+                  </div>
+                  <input type="submit" value="Really Delete" name="delete" class="ui button red"  >
+                </form>
+              </div>
+            </div>
+
+            <h4 class="ui dividing header" style="font-size:16px">Urls</h4>
+
+            <table class="ui single line striped selectable unstackable table sortable searchable ">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Url</th>
+                  <th>Status Code</th>
+                  <th>Hash</th>
+                  <th>Scanned</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for url in urls %}
+                  <tr class='clickable clickable-row' data-href='/url/{{- url.id }}'>
+                    <td>{{- url.id }}</td>
+                    <td>{{- url.url }}</td>
+                    <td>{{- url.status_code }}</td>
+                    <td>{{- url.sha256 }}</td>
+                    <td>{{- url.last_check }}</td>
+                  </tr>
+                {%- endfor %}
+
+              </tbody>
+            </table>
+          </div>
+
+          <script>
+            $(document).ready(function() {
+              $('.ui.form').form({
+                  fields: {
+                    name : 'empty'
+                  }
+                });
+              });
+              $("#action-delete").click(function(){
+                $('.mini.modal')
+                 .modal('setting', 'closable', false)
+                 .modal('show')
+                ;
+              });
+          </script>
+
+{% endblock %}

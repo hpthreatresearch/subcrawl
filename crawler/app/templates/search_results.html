@@ -1,0 +1,47 @@
+<!-- © Copyright 2021 HP Development Company, L.P. -->
+{% extends 'base.html' %}
+
+{% block content %}
+          <div class="row">
+            <h2 class="ui huge dividing header" style="margin-top:10px">Search results</h2>
+          </div>
+          <div class="center aligned row" >
+		  
+		  {% if error %}
+		  <div style="display: table; width: 60%; border-radius: 25px; border: 1px solid black; background-color: #fce4e4; margin-bottom: 50px">
+			<div style="display: table-cell; padding-top: 10px; text-align:left; padding-left: 20px">
+				
+				  <label style="font-size:16px">{{ error }}</label>
+				
+			  </div>
+		  </div>
+		  {% endif %}
+		  
+		  <table class="ui single line striped selectable searchable unstackable table sortable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Url</th>
+                  <th>Status Code</th>
+                  <th>Hash</th>
+                  <th>Scanned</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for url in urls %}
+                  <tr class='clickable clickable-row' data-href='/url/{{- url.id }}'>
+                    <td>{{- url.id }}</td>
+                    <td>{{- url.url }}</td>
+                    <td>{{- url.status_code }}</td>
+                    <td>{{- url.sha256 }}</td>
+                    <td>{{- url.last_check }}</td>
+                  </tr>
+                {%- endfor %}
+
+              </tbody>
+            </table>
+		  
+          </div>
+
+{% endblock %}

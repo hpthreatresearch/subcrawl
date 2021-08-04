@@ -1,0 +1,62 @@
+{
+  "attributes": {
+    "url": {
+      "description": "Scanned URL from opendir",
+      "misp-attribute": "url",
+      "ui-priority": 1
+    },
+    "sha256": {
+      "description": "Secure Hash Algorithm 2 (256 bits)",
+      "misp-attribute": "sha256",
+      "ui-priority": 1
+    },
+    "content": {
+      "description": "Plaintext content of URL response",
+      "disable_correlation": true,
+      "misp-attribute": "attachment",
+      "ui-priority": 1
+    },
+    "title": {
+      "description": "Title of URL response",
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "sdhash": {
+      "description": "SDhash of URL content",
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "tlsh": {
+      "description": "Trend Micro Locality Sensitive Hash of URL content",
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "yara": {
+      "description": "Matching YARA rule",
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "status-code": {
+      "description": "Status Code of URL response.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "header": {
+      "description": "Headers of URL response.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0
+    }
+  },
+  "description": "A scanresult from an opendir url",
+  "meta-category": "network",
+  "name": "opendir-url",
+  "requiredOneOf": [
+    "url",
+    "sha256"
+  ],
+  "uuid": "7b4f16a7-7934-42e8-85ac-5e3415c0be5c",
+  "version": 9
+}

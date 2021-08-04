@@ -1,0 +1,82 @@
+<!-- © Copyright 2021 HP Development Company, L.P. -->
+{% extends 'base.html' %}
+
+{% block content %}
+          <div class="row">
+            <h2 class="ui huge dividing header" style="margin-top:10px">Url Information</h2>
+          </div>
+          <div class="center aligned row">
+
+            <form class="ui form" style="width:100%" method="POST" action="/url/{{ url.id }}">
+
+              <div class="field">
+                <label style="font-size:16px">Url</label>
+                <input type="text" disabled style="font-size:16px; opacity:0.8;" name="url" placeholder="Url" value="{{ url.url }}">
+              </div>
+
+              <div class="field">
+                <label style="font-size:16px">Status Code</label>
+                <input type="text" disabled style="font-size:16px; opacity:0.8;" name="status_code" placeholder="status_code" value="{{ url.status_code }}">
+              </div>
+
+              <div class="field">
+                <label style="font-size:16px">Title</label>
+                <input type="text" disabled style="font-size:16px; opacity:0.8;" name="title" placeholder="title" value="{{ url.title }}">
+              </div>
+
+              <div class="field">
+                <label style="font-size:16px">Sha256</label>
+                <input type="text" disabled style="font-size:16px; opacity:0.8;" name="title" placeholder="title" value="{{ url.sha256 }}">
+              </div>
+
+              <div class="field">
+                <label style="font-size:16px">Scanned</label>
+                <input type="text" disabled style="font-size:16px; opacity:0.8;" name="last_check" placeholder="last_check" value="{{ url.last_check }}">
+              </div>
+			  
+			  {% for ext in extensions %}
+			  <div class="field">
+			  <label style="font-size:16px">{{ ext.key }}</label>
+                <input type="text" disabled style="font-size:16px; opacity:0.8;" name="extension_{{ ext.key }}" placeholder="Extension {{ ext.key }}" value="{{ ext.value }}">
+              </div>
+			  {%- endfor %}
+			  
+			  
+              <input type="button" value="Delete Url" name="confirm" class="ui button red" id="action-delete" />
+
+            </form>
+
+            <div class="ui mini modal">
+              <div class="header">Confirm Deletion</div>
+              <div class="content">
+                <p>Do you really want to delete this Url?</p>
+              </div>
+              <div class="actions">
+                <form method="POST" action="/url/{{ url.id }}">
+                  <div class="ui deny button">
+                    Cancel
+                  </div>
+                  <input type="submit" value="Really Delete" name="delete" class="ui button red"  >
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <script>
+            $(document).ready(function() {
+              $('.ui.form').form({
+                  fields: {
+                    name : 'empty'
+                  }
+                });
+              });
+              $("#action-delete").click(function(){
+                $('.mini.modal')
+                 .modal('setting', 'closable', false)
+                 .modal('show')
+                ;
+              });
+          </script>
+
+{% endblock %}

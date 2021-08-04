@@ -1,0 +1,6 @@
+matplotlib == 3.3.4
+networkx == 2.5
+numpy == 1.20.1
+py_tlsh == 4.5.0
+pymisp == 2.4.140
+requests == 2.22.0

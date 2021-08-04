@@ -1,0 +1,36 @@
+<!-- © Copyright 2021 HP Development Company, L.P. -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+          <div class="row">
+            <h2 class="ui huge dividing header" style="margin-top:10px">Urls</h2>
+          </div>
+          <div class="row">
+            <table class="ui single line striped selectable searchable unstackable table sortable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Url</th>
+                  <th>Status Code</th>
+                  <th>Hash</th>
+                  <th>Scanned</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for url in urls %}
+                  <tr class='clickable clickable-row' data-href='/url/{{- url.id }}'>
+                    <td>{{- url.id }}</td>
+                    <td>{{- url.url }}</td>
+                    <td>{{- url.status_code }}</td>
+                    <td>{{- url.sha256 }}</td>
+                    <td>{{- url.last_check }}</td>
+                  </tr>
+                {%- endfor %}
+
+              </tbody>
+            </table>
+
+          </div>
+{% endblock %}

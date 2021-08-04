@@ -1,0 +1,16 @@
+Jinja2 == 3.0.1
+PyYAML == 5.4.1
+beautifulsoup4 == 4.9.3
+clamd == 1.0.2
+falcon == 2.0.0
+mergedeep == 1.3.4
+peewee == 3.14.0
+py_tlsh == 4.5.0
+pyjarm == 0.0.5
+pymisp == 2.4.140
+python_magic == 0.4.22
+requests == 2.25.0
+timeloop == 1.0.2
+yara_python == 4.0.5
+gunicorn == 20.0.4
+kafka-python == 2.0.2
