@@ -34,6 +34,7 @@ class ElasticStorage(DefaultStorage):
             
         except Exception as e:
             self.logger.error('[ELASTIC] Problem connecting to Elastic: ' + str(e))
+            raise e
 
     def load_scraped_domains(self):
         return []
