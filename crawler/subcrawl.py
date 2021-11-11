@@ -341,6 +341,7 @@ def scrape(start_url, s_data):
                     logger.error("[ENGINE] " + str(e))
 
                 scrape_entry = {
+                    'scraped_on': datetime.datetime.now().isoformat(),
                     'sha256': SubCrawlHelpers.get_sha256(content),
                     'url': start_url,
                     'content_type': content_magic,
