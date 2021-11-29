@@ -1,5 +1,5 @@
 crawler:
-  batch_size: 25
+  batch_size: 250
   log_level: INFO
   scan_simple_domains: False
   host_max_crawl_depth: 2
@@ -81,3 +81,5 @@ elasticsearch:
   host: 127.0.0.1
   port: 9200
   index: subcrawl
+  archive_response_content: True
+  archive_log_location: "log/"
