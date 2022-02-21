@@ -19,6 +19,7 @@ class ElasticStorage(DefaultStorage):
     index = None
     archive_location = None
     archive_content = False
+    max_fields = 0
 
     def __init__(self, config, logger):
         self.cfg = config
@@ -74,6 +75,7 @@ class ElasticStorage(DefaultStorage):
         try:
             for domain in result_data:
                 for url_content in result_data[domain]:
+                    field_cnt = 0
                     parsed_url = urlparse(url_content['url'])
 
                     data = {
@@ -94,7 +96,7 @@ class ElasticStorage(DefaultStorage):
 
                     for header in url_content['data']['resp']['headers']:
                         data['http.response.header.' + self.normalize_field_name(header)] = url_content['data']['resp']['headers'][header]
-
+  
                     for module in url_content['modules']:
                         if len(url_content['modules'][module]) > 0:
                             if module == 'YARAProcessing':
