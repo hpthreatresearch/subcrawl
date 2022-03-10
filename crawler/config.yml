@@ -41,7 +41,6 @@ crawler:
     - .po
     - .crt
     - .phar
-    - .txt
     - .map
     - .xml
     - .pdf
@@ -81,7 +80,7 @@ misp:
   misp_api_key: API_KEY_GOES_HERE
   domain_event: 0
 elasticsearch:
-  host: 127.0.0.1
+  host: localhost
   port: 9200
   index: subcrawl
   archive_response_content: False

@@ -34,7 +34,7 @@ class ElasticStorage(DefaultStorage):
                                     'index': self.index}])
             self.es.ping()
 
-            if self.es.indices.exists(self.index) == False:
+            if not self.es.indices.exists(self.index):
                 self.logger.debug('[ELASTIC] Index did not exist, creating: ' + self.index)
                 self.es.indices.create(index=self.index)
 
@@ -51,7 +51,7 @@ class ElasticStorage(DefaultStorage):
         return []
 
     def normalize_field_name(self, field_name):
-        return field_name.replace(' ','-').replace('-','_').lower()
+        return field_name.replace(' ','_').replace('-','_').lower()
 
     def store_content(self, content_buffer, file_name):
 
