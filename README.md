@@ -230,6 +230,18 @@ To quickly analyse results directly after scanning URLs, a well-formatted output
 
 ![Console Storage UI](images/console-storage.png)
 
+#### Elastic
+
+Integration with an Elastic cluster is also available. Each URL along with it's data will be indexed as an event, this will include output from other modules such as Yara. A default dashboard has also been added to help get started using this module. Updates the _elasticsearch_ section will need to be made, this will include:
+
+* Elastic search host (default localhost)
+* Port to find elastic on (default 9200)
+* Index name (default subcrawl)
+* Archive response content - this saves the HTTP response body to disk (default False)
+* Archive log location - location to save response content (default log/)
+
+To use this output module, provide the value *ElasticStorage* with the _-s_ argument.
+
 #### SQLite
 
 Since the installation and configuration of MISP can be time-consuming, we implemented another module which stores the data in an SQLite database. To present the data to the user as simply and clearly as possible, we also developed a simple web GUI. Using this web application, the scanned domains and URLs can be viewed and searched with all their attributes. Since this is only an early version, no complex comparison features have been implemented yet.

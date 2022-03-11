@@ -1,5 +1,5 @@
 crawler:
-  batch_size: 50
+  batch_size: 250
   log_level: INFO
   scan_simple_domains: False
   host_max_crawl_depth: 2
@@ -10,7 +10,7 @@ crawler:
   logos_path: utils/logos/
   tag_line: ~~ Harvesting the Open Web ~~
   http_request_timeout: 10
-  delay_execution_time: 10
+  delay_execution_time: 0
   http_download_timeout: 60
   http_max_size: 26214400
   processing_modules:
@@ -41,7 +41,6 @@ crawler:
     - .po
     - .crt
     - .phar
-    - .txt
     - .map
     - .xml
     - .pdf
@@ -52,6 +51,9 @@ crawler:
     - .csv
     - .xap
     - .ts
+    - .stub
+    - .tpl
+    - .h
   archive_magics:
     - zip archive data
   pe_magics:
@@ -77,3 +79,9 @@ misp:
   misp_url: https://localhost
   misp_api_key: API_KEY_GOES_HERE
   domain_event: 0
+elasticsearch:
+  host: localhost
+  port: 9200
+  index: subcrawl
+  archive_response_content: False
+  archive_log_location: "log/"
