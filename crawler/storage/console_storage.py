@@ -40,13 +40,19 @@ class ConsoleStorage(DefaultStorage):
             if len(results) > 0:
                 print(SubCrawlColors.CYAN + "<=====   " + str(domain) +
                       "  =====>"+SubCrawlColors.RESET)
-            
+                      
                 for payload_module in results:
-                    for result in results[payload_module]:
-                        print("\t[" + payload_module + "] " +
-                              str(result['matches']) + "( " +
-                              result['url'] + " )" + SubCrawlColors.RESET)
-                        print("\t\t[SHA256] " + result['hash'])
+                    if payload_module == "JARMProcessing":
+                        for result in results[payload_module]:
+                            print("\t[" + payload_module + "] " +
+                                result["fingerprint"] + " (" +
+                                "port: " + str(result["port"]) + ")" + SubCrawlColors.RESET)
+                    else:
+                        for result in results[payload_module]:
+                            print("\t[" + payload_module + "] " +
+                                str(result['matches']) + "( " +
+                                result['url'] + " )" + SubCrawlColors.RESET)
+                            print("\t\t[SHA256] " + result['hash'])
                 print("")
 
         return True
