@@ -154,7 +154,7 @@ def main(argv):
                         scrape_urls.add(parsed_url)
                     scraped_domains.add(parsed.netloc)
                 else:
-                    logger.debug("[~] Domain already scanned: "
+                    logger.debug("[~] Domain already added to the scanning queue: "
                                           + str(parsed.netloc))
     else:
         logger.info("[ENGINE] Using file input for URL processing...")
@@ -171,7 +171,7 @@ def main(argv):
                                 scrape_urls.add(parsed_url)
                             scraped_domains.add(parsed.netloc)
                         else:
-                            logger.debug("[ENGINE] Domain already scanned: " + str(parsed.netloc))  
+                            logger.debug("[ENGINE] Domain already added to the scanning queue: " + str(parsed.netloc))  
         except Exception as e:
             logger.error("[ENGINE] Error reading input file for URL processing: " + str(e))
             sys.exit(-1)
