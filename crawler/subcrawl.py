@@ -280,7 +280,8 @@ def scrape(start_url, s_data):
             process_cfg, "crawler", "http_request_timeout"),
             headers=SubCrawlHelpers.get_config(process_cfg, "crawler",
                                                "headers"),
-            verify=False, allow_redirects=False,)
+            verify=False, allow_redirects=SubCrawlHelpers.get_config(process_cfg, "crawler",
+                                               "follow_redirects"),)
 
         if resp.status_code == 200:
             response_size_ok = True
