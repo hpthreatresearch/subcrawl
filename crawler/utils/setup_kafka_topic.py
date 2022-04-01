@@ -4,7 +4,7 @@ from kafka.admin import KafkaAdminClient, NewTopic
 
 def check_topic():
     admin_client = KafkaAdminClient(
-        bootstrap_servers="redpanda-1:29092",
+        bootstrap_servers="kafka:9092",
         client_id='test'
     )
     if "urls" not in admin_client.list_topics():

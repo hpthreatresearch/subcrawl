@@ -10,7 +10,7 @@ from timeloop import Timeloop
 from utils import SubCrawlColors, SubCrawlHelpers
 from utils import check_topic
 
-# check if redpanda topic exists and create if needed
+# check if kafka topic exists and create if needed
 check_topic()
 tl = Timeloop()
 
