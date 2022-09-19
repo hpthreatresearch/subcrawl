@@ -276,6 +276,7 @@ def scrape(start_url, s_data):
     try:
         scrape_domain = dict()
         request_start = datetime.datetime.now()
+        logger.debug("[ENGINE] Scanning URL: " + start_url)
         resp = requests.get(start_url, timeout=SubCrawlHelpers.get_config(
             process_cfg, "crawler", "http_request_timeout"),
             headers=SubCrawlHelpers.get_config(process_cfg, "crawler",
