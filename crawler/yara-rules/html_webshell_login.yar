@@ -8,10 +8,10 @@ rule protected_webshell
     date = "2021-06-08"
 
   strings:
-    $a1 = /actions*=\s*\"\"/
-    $a2 = /methods*=\s*\"post\"/
+    $a1 = /action\s*=\s*\"\"/
+    $a2 = /method\s*=\s*\"post\"/
     $a3 = /type\s*=\s*\"submit\"/
-    $a4 = /name\s*=\s*\"[_{1}a-z]{3,4}\"/
+    $a4 = /name\s*=\s*\"_{0,}[a-z]{2,}\"/
 	
     $b1 = /type\s*=\s*\"input\"/
     $b2 = /type\s*=\s*\"text\"/
