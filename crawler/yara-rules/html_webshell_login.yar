@@ -11,7 +11,7 @@ rule protected_webshell
     $a1 = /action\s*=\s*\"\"/
     $a2 = /method\s*=\s*\"post\"/
     $a3 = /type\s*=\s*\"submit\"/
-    $a4 = /name\s*=\s*\"_{0,}[a-z]{2,}\"/
+    $a4 = /name\s*=\s*\"[a-z]{0,}_{0,}[a-z]{2,}\"/
 	
     $b1 = /type\s*=\s*\"input\"/
     $b2 = /type\s*=\s*\"text\"/
