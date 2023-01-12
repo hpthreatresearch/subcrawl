@@ -1,7 +1,7 @@
-rule unk_webpanel_login
+rule agenttesla_panel_login
 {
   meta:
-    description = "Unsure of panel, login page"
+    description = "AgentTesla panel login page"
     author = "josh@m9cyber.com"
     date = "2022-03-10"
  strings:
