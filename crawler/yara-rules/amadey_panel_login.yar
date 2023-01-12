@@ -7,7 +7,7 @@ rule amadey_panel_login
  strings:
     $title = "authorization</title>" nocase
     $form_action = "action=\"Login.php\""
-    $bg_img = "images\\bg_1.png"
+    $bg_img = "images\\bg_1.png" nocase
     $pass = "name=\"password\"" nocase
  condition:
     all of them
