@@ -11,10 +11,10 @@ import requests
 from kafka import KafkaConsumer, KafkaProducer
 from timeloop import Timeloop
 
-producer = KafkaProducer(bootstrap_servers=['redpanda-1:29092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
+producer = KafkaProducer(bootstrap_servers=['kafka:9092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
 consumer = KafkaConsumer(
     'urls',
-    bootstrap_servers=['redpanda-1:29092'],
+    bootstrap_servers=['kafka:9092'],
     auto_offset_reset='earliest',
     enable_auto_commit=False,
     group_id='urls-dedup',

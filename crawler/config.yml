@@ -1,8 +1,9 @@
 crawler:
   batch_size: 250
-  log_level: INFO
+  log_level: DEBUG
   scan_simple_domains: False
   host_max_crawl_depth: 2
+  follow_redirects: False
   download_dir: samples/
   tmp_dir: tmp/
   save_payload_content: False

@@ -31,7 +31,7 @@ try:
     from kafka import KafkaConsumer
     consumer = KafkaConsumer(
         'urls',
-        bootstrap_servers=['localhost:9092'],
+        bootstrap_servers=['kafka:9092'],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
         group_id='urls-crawler',
@@ -255,7 +255,7 @@ def scrape_manager(data):
     init_pages = domain_urls
     process_processing_modules = processing_modules
 
-    logger.debug("Starting down path... " + domain_urls[0])
+    logger.debug("[ENGINE] Starting down path... " + domain_urls[0])
 
     result_dicts = list()
     for url in domain_urls:
@@ -276,11 +276,13 @@ def scrape(start_url, s_data):
     try:
         scrape_domain = dict()
         request_start = datetime.datetime.now()
+        logger.debug("[ENGINE] Scanning URL: " + start_url)
         resp = requests.get(start_url, timeout=SubCrawlHelpers.get_config(
             process_cfg, "crawler", "http_request_timeout"),
             headers=SubCrawlHelpers.get_config(process_cfg, "crawler",
                                                "headers"),
-            verify=False, allow_redirects=False,)
+            verify=False, allow_redirects=SubCrawlHelpers.get_config(process_cfg, "crawler",
+                                               "follow_redirects"),)
 
         if resp.status_code == 200:
             response_size_ok = True
@@ -305,15 +307,20 @@ def scrape(start_url, s_data):
             if response_size_ok:
                 content = ctt.getvalue()
                 signature = ""
+                title = None
+                bs = None
                 content_magic = "NONE"
-                bs = BeautifulSoup(str(content), "html.parser")
+                try:
+                    bs = BeautifulSoup(str(content), "html.parser")
+                    title = bs.find('title')
+                except:
+                    bs = None
                 content_magic = magic.from_buffer(content).lower()
-                title = bs.find('title')
                 module_results = {}
                 if title is not None and \
                     "index of" in title.get_text().lower() \
                         and bs is not None:
-                    
+
                     for link in bs.find_all('a'):
                         if link.has_attr('href'):
                             href = link.attrs['href']
@@ -324,7 +331,7 @@ def scrape(start_url, s_data):
                                     and not next_page.lower().endswith(tuple(SubCrawlHelpers.get_config(process_cfg, "crawler", "ext_exclude"))):
                                     logger.debug("[ENGINE] Discovered: " + next_page)
                                     crawl_pages.append(next_page)
-                                    scrape(next_page, s_data)
+                                    scrape(next_page, s_data)                
                 else:
                     for p_module in process_processing_modules:
                         mod_res = p_module.process(start_url, content)
