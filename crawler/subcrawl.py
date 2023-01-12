@@ -161,11 +161,12 @@ def main(argv):
         try:
             with open(options.file_path, 'r') as f:
                 for url in f:
+                    url = url.strip()
                     if SubCrawlHelpers.is_valid_url(url):
                         parsed = urlparse(url)
                         if parsed.netloc not in scraped_domains:
                             parsed_url = url
-                            if not url.endswith("/"):
+                            if not url.endswith('exe') and not url.endswith("/"):
                                 parsed_url = remove_url_resource(url)
                             if parsed_url:
                                 scrape_urls.add(parsed_url)
@@ -185,6 +186,14 @@ def main(argv):
     domain_urls = dict()
     distinct_urls = list()
     for start_url in scrape_urls:
+        # This will add the full URL if it ends with an extension, then passes it along for parsing
+        if start_url.endswith('.exe'):
+            logger.debug("[ENGINGE] Adding EXE URL directly: " + start_url)
+            if start_url not in distinct_urls:
+                distinct_urls.append(start_url)
+                domain_urls.setdefault(parsed.netloc, []).append(start_url)
+                start_url = remove_url_resource(start_url)
+        
         parsed = urlparse(start_url)
         base = parsed.scheme + "://" + parsed.netloc
         paths = parsed.path[:-1].split('/')  # remove the trailing '/' to avoid an empty path
