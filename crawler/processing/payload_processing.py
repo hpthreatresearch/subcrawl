@@ -67,6 +67,11 @@ class PayloadProcessing(DefaultProcessing):
             self.logger.info(SubCrawlColors.CYAN + "[PAYLOAD] ELF found at " +
                              url + " (" + shasum + ")" + SubCrawlColors.RESET)
             file_ext = ".elf.bin"
+        elif any(partial in content_magic for partial in
+                 SubCrawlHelpers.get_config(self.cfg, "crawler",
+                                            "java_magics")):
+            self.logger.info(SubCrawlColors.CYAN + "[PAYLOAD] Java found at " +
+                             url + " (" + shasum + ")" + SubCrawlColors.RESET)
         else:
             content_match = False
 

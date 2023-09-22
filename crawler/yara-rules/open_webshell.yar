@@ -10,5 +10,5 @@ rule open_webshell
     $b = "uname"
 
   condition:
-    any of them
+    all of them
 }

@@ -161,11 +161,12 @@ def main(argv):
         try:
             with open(options.file_path, 'r') as f:
                 for url in f:
+                    url = url.strip()
                     if SubCrawlHelpers.is_valid_url(url):
                         parsed = urlparse(url)
                         if parsed.netloc not in scraped_domains:
                             parsed_url = url
-                            if not url.endswith("/"):
+                            if not url.endswith('exe') and not url.endswith("/"):
                                 parsed_url = remove_url_resource(url)
                             if parsed_url:
                                 scrape_urls.add(parsed_url)
@@ -185,6 +186,14 @@ def main(argv):
     domain_urls = dict()
     distinct_urls = list()
     for start_url in scrape_urls:
+        # This will add the full URL if it ends with an extension, then passes it along for parsing
+        if start_url.endswith('.exe'):
+            logger.debug("[ENGINGE] Adding EXE URL directly: " + start_url)
+            if start_url not in distinct_urls:
+                distinct_urls.append(start_url)
+                domain_urls.setdefault(parsed.netloc, []).append(start_url)
+                start_url = remove_url_resource(start_url)
+        
         parsed = urlparse(start_url)
         base = parsed.scheme + "://" + parsed.netloc
         paths = parsed.path[:-1].split('/')  # remove the trailing '/' to avoid an empty path
@@ -255,7 +264,7 @@ def scrape_manager(data):
     init_pages = domain_urls
     process_processing_modules = processing_modules
 
-    logger.debug("Starting down path... " + domain_urls[0])
+    logger.debug("[ENGINE] Starting down path... " + domain_urls[0])
 
     result_dicts = list()
     for url in domain_urls:
@@ -307,15 +316,20 @@ def scrape(start_url, s_data):
             if response_size_ok:
                 content = ctt.getvalue()
                 signature = ""
+                title = None
+                bs = None
                 content_magic = "NONE"
-                bs = BeautifulSoup(str(content), "html.parser")
+                try:
+                    bs = BeautifulSoup(str(content), "html.parser")
+                    title = bs.find('title')
+                except:
+                    bs = None
                 content_magic = magic.from_buffer(content).lower()
-                title = bs.find('title')
                 module_results = {}
                 if title is not None and \
                     "index of" in title.get_text().lower() \
                         and bs is not None:
-                    
+
                     for link in bs.find_all('a'):
                         if link.has_attr('href'):
                             href = link.attrs['href']
@@ -326,7 +340,7 @@ def scrape(start_url, s_data):
                                     and not next_page.lower().endswith(tuple(SubCrawlHelpers.get_config(process_cfg, "crawler", "ext_exclude"))):
                                     logger.debug("[ENGINE] Discovered: " + next_page)
                                     crawl_pages.append(next_page)
-                                    scrape(next_page, s_data)
+                                    scrape(next_page, s_data)                
                 else:
                     for p_module in process_processing_modules:
                         mod_res = p_module.process(start_url, content)
